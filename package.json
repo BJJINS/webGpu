@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "esbuild": "^0.21.1",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build": "esbuild app.jsx --bundle --outfile=out.js",
+    "buildTest": "node main.mjs"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.40"
+  }
+}
