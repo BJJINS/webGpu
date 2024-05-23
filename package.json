@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "esbuild": "^0.21.1",
+    "open": "^10.1.0",
     "typescript": "^5.4.5"
   },
   "type": "module",
@@ -10,5 +11,6 @@
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.40"
-  }
+  },
+  "repository": "https://github.com/BJJINS/webGpu.git"
 }
