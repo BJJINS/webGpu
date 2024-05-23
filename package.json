@@ -3,9 +3,10 @@
     "esbuild": "^0.21.1",
     "typescript": "^5.4.5"
   },
+  "type": "module",
   "scripts": {
     "build": "esbuild app.jsx --bundle --outfile=out.js",
-    "buildTest": "node main.mjs"
+    "start": "node main.js"
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.40"
