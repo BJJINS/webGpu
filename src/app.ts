@@ -1,5 +1,6 @@
 import './serve';
 import shaders from './shaders/index.wgsl';
+import { createCanvas } from './utils';
 async function init() {
   if (!navigator.gpu) {
     throw Error('WebGPU not supported.');
@@ -15,8 +16,8 @@ async function init() {
     code: shaders
   });
 
+  const canvas = createCanvas('gpuCanvas') as HTMLCanvasElement;
 
-  const canvas = document.querySelector('#gpuCanvas') as HTMLCanvasElement;
   const context = canvas.getContext('webgpu')!;
 
   context.configure({
