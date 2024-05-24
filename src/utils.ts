@@ -4,7 +4,8 @@ export const createCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
     canvas = document.createElement('canvas');
     canvas.setAttribute('id', id);
     canvas.setAttribute('style', `height:${h};width:${w};`);
-    document.body.appendChild(canvas);
+    // 将canvas插入父元素首位
+    document.body.insertBefore(canvas, document.body.children[0]);
   }
   // 根据像素比设置canvas避免图像模糊
   const multiplier = window.devicePixelRatio;
