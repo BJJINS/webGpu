@@ -16,5 +16,13 @@ export const createCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
     canvas.height = height;
   }
 
-  return canvas;
+  return canvas.getContext("webgpu");
 };
+
+export const shaderModule = (device: GPUDevice, code: string, label?: string) => {
+  return device.createShaderModule({
+    label,
+    code
+  });
+};
+
