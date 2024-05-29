@@ -3,3 +3,6 @@
 [图形学的pdf](https://github.com/yyc-git/MyData/tree/master/3d)
 
 [教程网站](https://webgpufundamentals.org/webgpu/lessons/zh_cn/webgpu-fundamentals.html#a-run-computations-on-the-gpu)
+
+WebGPU 简体中文 文档：https://www.orillusion.com/zh/webgpu.html
+WGSL 简体中文 文档：https://www.orillusion.com/zh/wgsl.html

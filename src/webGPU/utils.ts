@@ -1,4 +1,4 @@
-export const createCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
+export const initCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
   let canvas = document.getElementById(id) as HTMLCanvasElement;
   if (!canvas) {
     canvas = document.createElement('canvas');
@@ -16,7 +16,7 @@ export const createCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
     canvas.height = height;
   }
 
-  return canvas.getContext("webgpu");
+  return canvas.getContext('webgpu')!;
 };
 
 export const shaderModule = (device: GPUDevice, code: string, label?: string) => {
@@ -26,3 +26,18 @@ export const shaderModule = (device: GPUDevice, code: string, label?: string) =>
   });
 };
 
+export const initWebGPU = async () => {
+  if (!navigator.gpu) {
+    throw Error('WebGPU not supported.');
+  }
+  const adapter = await navigator.gpu.requestAdapter();
+  if (!adapter) {
+    throw Error("Couldn't request WebGPU adapter.");
+  }
+  const device = await adapter.requestDevice();
+  device.lost.then((err) => {
+    throw Error(`lost device :${err}`);
+  });
+
+  return device;
+};
