@@ -1,7 +1,7 @@
 import { initCanvas, initWebGPU, shaderModule } from '../utils';
 import triangleShaderCode from './triangle.wgsl';
 const device = await initWebGPU();
-const context = await initCanvas();
+const context = initCanvas();
 const format = navigator.gpu.getPreferredCanvasFormat();
 context.configure({
   device,
