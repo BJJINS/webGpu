@@ -1,15 +1,19 @@
-@vertex
-fn vs(@builtin(vertex_index) vertexIndex: u32) -> @builtin(position) vec4<f32> {
-    var pos = array<vec2<f32>, 3>(
-        vec2<f32>(0.0, 0.5),
-        vec2<f32>(-0.5, -0.5),
-        vec2<f32>(0.5, -0.5)
-    );
-
-    return vec4<f32>(pos[vertexIndex], 0.0, 1.0);
+struct OurStruct {
+    color: vec4f,
+    scale: vec2f,
+    offset: vec2f
 }
 
-@fragment
-fn fs() -> @location(0) vec4<f32> {
-    return vec4<f32>(1.0, 0.0, 0.0, 1.0);
+@group(0) @binding(0) var<uniform> ourStruct:OurStruct;
+@vertex fn vs(@builtin(vertex_index) vertexIndex:u32 ) -> @builtin(position) vec4f {
+    let pos =  array( 
+          vec2f( 0.0,  0.5),  // top center
+          vec2f(-0.5, -0.5),  // bottom left
+          vec2f( 0.5, -0.5)   // bottom right
+        );
+    return vec4f(pos[vertexIndex] * ourStruct.scale + ourStruct.offset,0.0,0.1);
+}
+
+@fragment fn fs() -> @location(0) vec4f {
+    return ourStruct.color;
 }

@@ -1,3 +1,3 @@
-// import './triangle';
+import './triangle';
 // import './vertexBuffer';
-import './bindSource';
+// import './bindSource';
