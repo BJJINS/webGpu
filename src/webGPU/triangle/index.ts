@@ -9,7 +9,11 @@ context.configure({
   alphaMode: 'opaque' // 不透明
 });
 
-const module = shaderModule(device, triangleShaderCode, '三角形着色器');
+const module = device.createShaderModule({
+  label: 'our hardcoded rgb triangle shaders',
+  code: triangleShaderCode
+});
+
 const pipeline = device.createRenderPipeline({
   vertex: {
     module
