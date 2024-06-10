@@ -6,7 +6,7 @@ const format = navigator.gpu.getPreferredCanvasFormat();
 context.configure({
   device,
   format,
-  alphaMode: 'opaque' // 不透明
+  alphaMode: 'opaque' // 不透明 
 });
 
 const module = shaderModule(device, triangleShaderCode, '三角形着色器');
