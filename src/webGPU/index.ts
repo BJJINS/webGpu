@@ -1,2 +1,1 @@
-import './vertexBuffer';
-// import './bindSource';
+import './rect';
