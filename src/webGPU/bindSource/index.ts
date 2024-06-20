@@ -1,4 +1,4 @@
-import { initCanvas, initWebGPU, shaderModule } from '../utils';
+import { initCanvas, initWebGPU } from '../utils';
 import triangleShaderCode from './shader.wgsl';
 const device = await initWebGPU();
 const context = initCanvas();
@@ -6,22 +6,26 @@ const format = navigator.gpu.getPreferredCanvasFormat();
 context.configure({
   device,
   format,
-  alphaMode: 'opaque' // 不透明
+  alphaMode: 'opaque', // 不透明
 });
 
-const module = shaderModule(device, triangleShaderCode, '三角形着色器');
+const module = device.createShaderModule({
+  label: '三角形着色器',
+  code: triangleShaderCode,
+});
+
 const vertexArray = new Float32Array([0.0, 0.5, -0.5, -0.5, 0.5, -0.5]);
 const vertexBuffer = device.createBuffer({
   size: vertexArray.byteLength,
   //GPUBufferUsage.COPY_DST 表明该缓冲区是可以作为拷贝目的地(destination)，也就是说可以被 写入
   //表明该缓冲区是应用于 顶点阶段
-  usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST
+  usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
 });
 
 const colorArray = new Float32Array([1.0, 0.0, 0.0, 1.0]);
 const colorBuffer = device.createBuffer({
   size: colorArray.byteLength,
-  usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+  usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
 });
 
 device.queue.writeBuffer(vertexBuffer, 0, vertexArray);
@@ -44,21 +48,21 @@ const pipeline = device.createRenderPipeline({
             shaderLocation: 0,
             offset: 0,
             // 每一次读取得到的结果类型，"float32x2" 表示为 2 个 32 位浮点数
-            format: 'float32x2'
-          }
-        ]
-      }
-    ]
+            format: 'float32x2',
+          },
+        ],
+      },
+    ],
   },
   fragment: {
     module,
-    targets: [{ format }]
+    targets: [{ format }],
   },
   primitive: {
-    topology: 'triangle-list'
+    topology: 'triangle-list',
   },
   //layout 可以简单把它想象成这是 PhotoShop 图像处理软件中的 “图层叠加的顺序值”
-  layout: 'auto'
+  layout: 'auto',
 });
 
 const bindGroup = device.createBindGroup({
@@ -66,9 +70,9 @@ const bindGroup = device.createBindGroup({
   entries: [
     {
       binding: 0,
-      resource: { buffer: colorBuffer }
-    }
-  ]
+      resource: { buffer: colorBuffer },
+    },
+  ],
 });
 
 const commandEncoder = device.createCommandEncoder();
@@ -80,9 +84,9 @@ const passEncoder = commandEncoder.beginRenderPass({
       view: textureView,
       clearValue: [255, 255, 255, 1], //执行渲染通道之前要清除的颜色值，默认为(r:0, g:0, b:0, a:0)
       loadOp: 'clear',
-      storeOp: 'store'
-    }
-  ]
+      storeOp: 'store',
+    },
+  ],
 });
 
 passEncoder.setPipeline(pipeline);
