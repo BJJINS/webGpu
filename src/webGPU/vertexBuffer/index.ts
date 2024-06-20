@@ -1,4 +1,4 @@
-import { initCanvas, initWebGPU, shaderModule } from '../utils';
+import { initCanvas, initWebGPU } from '../utils';
 import triangleShaderCode from './shader.wgsl';
 const device = await initWebGPU();
 const context = initCanvas();
