@@ -1,10 +1,10 @@
 /**
  * 初始化画布并返回WebGPU上下文。
- * 
+ *
  * 此函数用于创建或获取一个具有指定ID、宽度和高度的画布元素，并根据设备的像素比调整其实际大小，
  * 以确保画布在不同设备上都能以较高的清晰度渲染图形。如果画布元素不存在于文档中，
  * 则会创建一个新的画布元素并将其插入文档的开头。
- * 
+ *
  * @param id 画布元素的ID，默认为'canvas'。
  * @param w 画布的宽度，默认为视口宽度('100vw')。
  * @param h 画布的高度，默认为视口高度('100vh')。
@@ -22,7 +22,7 @@ export const initCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
     // 将canvas插入父元素首位
     document.body.insertBefore(canvas, document.body.children[0]);
   }
-  
+
   // 根据设备的像素比调整画布的实际渲染大小，以提高渲染质量。
   // 根据像素比设置canvas避免图像模糊
   const multiplier = window.devicePixelRatio;
@@ -39,28 +39,11 @@ export const initCanvas = (id = 'canvas', w = '100vw', h = '100vh') => {
 };
 
 /**
- * 创建一个着色器模块。
- * 
- * 该函数通过提供的设备和着色器代码，创建并返回一个GPU着色器模块。着色器模块是GPU编程的一部分，用于定义和组织图形渲染的计算逻辑。
- * 
- * @param device GPU设备，用于创建着色器模块。
- * @param code 着色器代码，通常是SPIR-V格式的二进制代码。
- * @param label 可选的标签，用于给着色器模块添加一个名称，方便调试。
- * @returns 返回创建的着色器模块对象。
- */
-export const shaderModule = (device: GPUDevice, code: string, label?: string) => {
-  return device.createShaderModule({
-    label,
-    code
-  });
-};
-
-/**
  * 初始化WebGPU设备。
- * 
+ *
  * 本函数通过检查浏览器是否支持WebGPU，请求适配器和设备，来初始化WebGPU设备。
  * 如果任何步骤失败，将抛出错误。
- * 
+ *
  * @returns {Promise<WebGPUDevice>} 返回初始化的WebGPU设备。
  * @throws {Error} 如果WebGPU不支持、无法请求适配器或设备丢失，则抛出错误。
  */
@@ -69,16 +52,16 @@ export const initWebGPU = async () => {
   if (!navigator.gpu) {
     throw Error('WebGPU not supported.');
   }
-  
+
   // 请求WebGPU适配器
   const adapter = await navigator.gpu.requestAdapter();
   if (!adapter) {
     throw Error("Couldn't request WebGPU adapter.");
   }
-  
+
   // 请求WebGPU设备
   const device = await adapter.requestDevice();
-  
+
   // 监听设备丢失事件并抛出错误
   device.lost.then((err) => {
     throw Error(`lost device :${err}`);
